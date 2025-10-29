@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* GLOBAL layout anchors */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* If your app has a top-level wrapper (App or .app), ensure it fills height */
+.app, #app-root, .app-root {
+  height: 100%;
+}
+
+/* Leaflet container must have explicit height */
+.leaflet-container {
+  width: 100% !important;
+  height: 100vh !important; /* full viewport height */
+  position: relative; /* ensure positioned */
+}
+
+/* If you use a map wrapper element, ensure it fills the area */
+.map-wrapper {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+/* Ensure no accidental white overlay with very high z-index */
+.map-overlay-fix {
+  pointer-events: none;
+}
+

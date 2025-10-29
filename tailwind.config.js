@@ -1,5 +1,9 @@
-export default {
-  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
-  theme: { extend: {} },
-  plugins: [],
-};
+// tailwind.config.js
+module.exports = {
+  content: [
+    "./index.html",
+    // This line is the key
+    "./src/**/*.{js,ts,jsx,tsx}", 
+  ],
+  // ... rest of config
+}

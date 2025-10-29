@@ -22,6 +22,13 @@ const restaurantIcon = new L.Icon({
   popupAnchor: [0, -30],
 });
 
+const redIcon = new L.Icon({
+  iconUrl: "https://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png",
+  iconSize: [32, 32],
+  iconAnchor: [16, 32],
+  popupAnchor: [0, -32],
+});
+
 const iconMap = {
   shelter: shelterIcon,
   restaurant: restaurantIcon,
@@ -37,7 +44,25 @@ const MapView = () => {
     type: "shelter",
   });
   const [selectedCoords, setSelectedCoords] = useState(null);
-  const [reviewText, setReviewText] = useState({}); // store input for each location
+  const [reviewText, setReviewText] = useState({});
+    const [userLocation, setUserLocation] = useState(null);
+  const [mapCenter, setMapCenter] = useState([32.9, -117.1]);
+  
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const { latitude, longitude } = pos.coords;
+          setUserLocation([latitude, longitude]);
+          setMapCenter([latitude, longitude]);
+        },
+        (err) => {
+          console.warn("Could not get location:", err);
+        },
+        { enableHighAccuracy: true }
+      );
+    }
+  }, []);// store input for each location
 
   // Fetch locations and reviews
   useEffect(() => {
@@ -155,7 +180,11 @@ const MapView = () => {
     <div className="relative w-full h-screen">
       <MapContainer center={[32.9, -117.1]} zoom={12} className="absolute top-0 left-0 w-full h-full z-0">
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; OpenStreetMap contributors" />
-
+      {userLocation && (
+          <Marker position={userLocation} icon={redIcon}>
+            <Popup>You are here</Popup>
+          </Marker>
+        )}
         {locations.map((loc) => (
           <Marker key={loc.id} position={[loc.lat, loc.lng]} icon={iconMap[loc.type?.toLowerCase()] || shelterIcon}>
             <Popup>

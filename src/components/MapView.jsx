@@ -5,9 +5,10 @@ import "leaflet/dist/leaflet.css";
 
 import L from "leaflet";
 
-// Default marker fix
+//remove the default icon
 delete L.Icon.Default.prototype._getIconUrl;
 
+//icon for shelters - a red pin
 const shelterIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/252/252025.png",
   iconSize: [32, 32],
@@ -15,6 +16,7 @@ const shelterIcon = new L.Icon({
   popupAnchor: [0, -30],
 });
 
+//icon for restaurant - a black pin with the outline of a coffee cup
 const restaurantIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/9036/9036497.png",
   iconSize: [32, 32],
@@ -22,6 +24,8 @@ const restaurantIcon = new L.Icon({
   popupAnchor: [0, -30],
 });
 
+
+//icon for the current location of the viewer - a green pin
 const redIcon = new L.Icon({
   iconUrl: "https://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png",
   iconSize: [32, 32],
